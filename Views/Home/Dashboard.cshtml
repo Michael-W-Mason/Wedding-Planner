@@ -1,0 +1,39 @@
+@model List<Wedding>
+<h1>Dashboard</h1>
+<a asp-action="Logout" asp-controller="Home">Logout</a>
+<table class="table table-striped">
+    <tr>
+        <th>Wedding</th>
+        <th>Date</th>
+        <th>Total Guests</th>
+        <th>Action</th>
+    </tr>
+    @{
+        foreach (Wedding wedding in @Model)
+        {
+            <tr>
+                <td> <a asp-action="OneWedding" asp-controller="Home" asp-route-WeddingId=@wedding.WeddingId>@wedding.WedderOne & @wedding.WedderTwo</a></td>
+                <td>@wedding.Date</td>
+                <td>@wedding.Guests.Count()</td>
+                <td>
+                    @{
+                        if (wedding.Creator == ViewBag.UserId)
+                        {
+                            <a class="btn btn-danger" asp-action="DeleteWedding" asp-controller="Home"
+                asp-route-WeddingId=@wedding.WeddingId>Delete</a>
+                        }
+                        else if(wedding.Guests.Where(guest => guest.UserId == ViewBag.UserId).Count() > 0)
+                        {
+                            <a asp-action="UnRSVP" asp-controller="Home" asp-route-WeddingId=@wedding.WeddingId>UnRSVP</a>
+                        }
+                        else
+                        {
+                            <a asp-action="RSVP" asp-controller="Home" asp-route-WeddingId=@wedding.WeddingId>RSVP</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+<a asp-action="NewWedding" asp-controller="Home" class="btn btn-primary">New Wedding</a>

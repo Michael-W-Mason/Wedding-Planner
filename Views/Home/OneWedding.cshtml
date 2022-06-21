@@ -1,0 +1,14 @@
+@model Wedding
+<h1>@Model.WedderOne and @Model.WedderTwo 's Wedding</h1>
+<a asp-action="Dashboard" asp-controller="Home">Dashboard</a>
+<a asp-action="Logout" asp-controller="Home">Logout</a>
+<h2>@Model.Date</h2>
+<h2>Guests:</h2>
+<ul>
+    @{
+        foreach(GuestLog guest in @Model.Guests)
+        {
+            <li>@guest.User.FirstName</li>
+        }
+    }
+</ul>
